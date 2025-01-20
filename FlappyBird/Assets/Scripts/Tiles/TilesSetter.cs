@@ -25,8 +25,8 @@ namespace GameCore
 
         private void Start()
         {
-            Debug.Log(_mapBckgr.size);
-            Debug.Log(_mapBckgr.cellBounds);
+            //Debug.Log(_mapBckgr.size);
+            //Debug.Log(_mapBckgr.cellBounds);
         }
 
         private void Update()
