@@ -3,7 +3,7 @@ using UnityEngine.Tilemaps;
 
 namespace GameCore
 {
-    public class TilesSetter : MonoBehaviour
+    public sealed class TilesSetter : MonoBehaviour
     {
         [SerializeField]
         private Tile _tile;

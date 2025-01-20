@@ -324,7 +324,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.9811321, g: 0.2811477, b: 0.022214282, a: 1}
   m_FlipX: 0
@@ -430,7 +430,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1070741650}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: 3, z: 0}
+  m_LocalPosition: {x: -6, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -450,7 +450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77ee29dba2cf8f44bbe5f1cc23b81a09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  _speed: 5
 --- !u!114 &1070741653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -507,7 +507,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &1070741655
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -615,14 +615,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1278948726}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acac54a647164da4bbadbf2513e80e60, type: 3}
+  m_Script: {fileID: 11500000, guid: 2508a7dd8dbdde746aa527104642e13f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sections:
-  - {fileID: 1950732048}
-  - {fileID: 1616421392}
-  _speed: 5
-  _isMoving: 1
+  _bird: {fileID: 1070741652}
+  _sectionsController: {fileID: 1884696822}
 --- !u!4 &1616421391 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3206674558252389032, guid: 5032a746573a41044b312261d814e5e2, type: 3}
@@ -654,6 +651,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1884696821}
   - component: {fileID: 1884696820}
+  - component: {fileID: 1884696822}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -690,6 +688,24 @@ Transform:
   m_Father: {fileID: 1278948728}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1884696822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884696819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acac54a647164da4bbadbf2513e80e60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sections:
+  - {fileID: 1950732048}
+  - {fileID: 1616421392}
+  _speed: 3
+  _isMoving: 1
+  _setToInitPos: 0
 --- !u!114 &1950732048 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3888140615118403744, guid: 5032a746573a41044b312261d814e5e2, type: 3}
@@ -709,6 +725,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1884696821}
     m_Modifications:
+    - target: {fileID: 288446936060584155, guid: 5032a746573a41044b312261d814e5e2, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3206674558252389032, guid: 5032a746573a41044b312261d814e5e2, type: 3}
       propertyPath: m_RootOrder
       value: -1
