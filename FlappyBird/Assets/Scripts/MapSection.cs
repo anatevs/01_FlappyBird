@@ -23,7 +23,7 @@ namespace GameCore
 
         private float _leftCameraBorder;
 
-        private void Awake()
+        private void Start()
         {
             _rightBorderShift = (_backgroundTilemap.size.x
                 + _backgroundTilemap.origin.x) * _backgroundTilemap.cellSize.x;

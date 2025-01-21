@@ -14,6 +14,21 @@ namespace GameCore
 
         private Rigidbody2D _rigidbody;
 
+        private float _startX;
+
+        public void SetToInitX()
+        {
+            transform.position = new Vector3(
+                _startX,
+                transform.position.y,
+                transform.position.z);
+        }
+
+        private void Start()
+        {
+            _startX = transform.position.x;
+        }
+
         private void OnEnable()
         {
             _rigidbody = GetComponent<Rigidbody2D>();

@@ -1,17 +1,19 @@
 ﻿using UnityEngine;
+using GameCore;
 
-namespace GameCore
+namespace GameManagement
 {
-    public class EndGameManager : MonoBehaviour
+    public sealed class EndGameManager : MonoBehaviour
     {
-        [SerializeField]
         private Bird _bird;
 
-        [SerializeField]
         private MapSectionsController _sectionsController;
 
         private void OnEnable()
         {
+            _bird = GameSingleton.GetInstance().Bird;
+            _sectionsController = GameSingleton.GetInstance().MapSectionsController;
+
             _bird.OnRoundEnded += _sectionsController.StopMoving;
         }
 

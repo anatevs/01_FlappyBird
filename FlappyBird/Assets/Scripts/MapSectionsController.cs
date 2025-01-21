@@ -37,7 +37,7 @@ namespace GameCore
             }
         }
 
-        private void Awake()
+        private void Start()
         {
             var camera = Camera.main;
 

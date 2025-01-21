@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 namespace GameCore
 {
@@ -7,26 +6,43 @@ namespace GameCore
     {
         public event Action<int, int> OnAchievementResponded;
 
-        private int _newResult;
+        private int _currentResult;
 
         private int _bestResult;
 
+        //public AchievementStorage(int currentResult, int bestResult)
+        //{
+        //    _currentResult = currentResult;
+        //    _bestResult = bestResult;
+        //}
+
         public void SetNewResult(int result)
         {
-            _newResult = result;
+            _currentResult = result;
         }
 
         public void UpdateBestResult()
         {
-            if (_bestResult < _newResult)
+            if (_bestResult < _currentResult)
             {
-                _bestResult = _newResult;
+                _bestResult = _currentResult;
             }
         }
 
         public void SendAchievements()
         {
-            OnAchievementResponded?.Invoke(_bestResult, _newResult);
+            OnAchievementResponded?.Invoke(_bestResult, _currentResult);
+        }
+
+        public (int best, int current) GetAchievments()
+        {
+            return (_bestResult, _currentResult);
+        }
+
+        public void SetAchievements(int best, int current)
+        {
+            _bestResult = best;
+            _currentResult = current;
         }
     }
 }
