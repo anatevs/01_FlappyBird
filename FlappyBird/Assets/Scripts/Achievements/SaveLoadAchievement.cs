@@ -29,7 +29,7 @@ namespace GameCore
                 bestResult = PlayerPrefs.GetInt(SAVE_KEY);
             }
 
-            _achievementStorage.SetAchievements(bestResult, 0);
+            _achievementStorage.SetBest(bestResult);
         }
 
         private void Save()

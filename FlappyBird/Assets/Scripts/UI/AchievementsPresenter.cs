@@ -1,27 +1,26 @@
 ﻿using GameCore;
-using System.Collections;
-using UnityEngine;
 
 namespace UI
 {
     public sealed class AchievementsPresenter
     {
-        private ResultInfoPresenter _bestPresenter;
+        private readonly AchievementsView _view;
 
-        private ResultInfoPresenter _currentPresenter;
-
-        private AchievementStorage _storage;
+        private readonly AchievementStorage _storage;
 
         public AchievementsPresenter(
-            ResultInfoPresenter bestPresenter,
-            ResultInfoPresenter currentPresenter,
+            AchievementsView view,
             AchievementStorage storage)
         {
-            _bestPresenter = bestPresenter;
-            _currentPresenter = currentPresenter;
+            _view = view;
             _storage = storage;
         }
 
+        public void Show()
+        {
+            (int best, int score) = _storage.GetAchievments();
 
+            _view.SetValues(best.ToString(), score.ToString());
+        }
     }
 }
