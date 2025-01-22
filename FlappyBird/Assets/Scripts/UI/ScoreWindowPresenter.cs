@@ -1,28 +1,21 @@
 ﻿using System;
-using UnityEngine;
 
 namespace UI
 {
-    public sealed class ScoreWindowPresenter : MonoBehaviour
+    public sealed class ScoreWindowPresenter
     {
-        public event Action OnHided;
+        public event Action OnOkClicked;
 
-        private ScoreWindowView _windowView;
+        private readonly ScoreWindowView _windowView;
 
-        //private start menu presenter with OnScoreButtonClicked
-
-        private AchievementsPresenter _achievementsPresenter;
+        private readonly AchievementsPresenter _achievementsPresenter;
 
         public ScoreWindowPresenter(
             ScoreWindowView windowView,
-            //
             AchievementsPresenter achievementsPresenter)
         {
             _windowView = windowView;
-
             _achievementsPresenter = achievementsPresenter;
-
-            //Show subscribtion to menu button
         }
 
         public void Show()
@@ -36,7 +29,7 @@ namespace UI
 
         private void Hide()
         {
-            OnHided?.Invoke();
+            OnOkClicked?.Invoke();
 
             _windowView.gameObject.SetActive(false);
 

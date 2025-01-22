@@ -1,32 +1,38 @@
 ﻿using UnityEngine;
 using GameCore;
+using System;
 
 namespace GameManagement
 {
     public sealed class EndGameManager : MonoBehaviour
     {
-        private readonly GameSingleton _singleton = GameSingleton.GetInstance();
+        public event Action OnRoundEnded;
 
         private Bird _bird;
 
         private MapSectionsController _sectionsController;
 
-        private void Construct()
+        public void Construct(Bird bird, MapSectionsController sectionsController)
         {
-            _bird = _singleton.Bird;
-            _sectionsController = _singleton.MapSectionsController;
+            _bird = bird;
+            _sectionsController = sectionsController;
         }
 
         private void OnEnable()
         {
-            Construct();
-
-            _bird.OnRoundEnded += _sectionsController.StopMoving;
+            _bird.OnRoundEnded += MakeOnRoundEnd;
         }
 
         private void OnDisable()
         {
-            _bird.OnRoundEnded -= _sectionsController.StopMoving;
+            _bird.OnRoundEnded -= MakeOnRoundEnd;
+        }
+
+        private void MakeOnRoundEnd()
+        {
+            OnRoundEnded?.Invoke();
+
+            _sectionsController.SetIsMoving(false);
         }
     }
 }

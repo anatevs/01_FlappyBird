@@ -22,9 +22,9 @@ namespace GameCore
         [SerializeField]
         private bool _setToInitPos;
 
-        public void StopMoving()
+        public void SetIsMoving(bool isMoving)
         {
-            _isMoving = false;
+            _isMoving = isMoving;
         }
 
         public void SetSectionsToInitX()
@@ -37,16 +37,19 @@ namespace GameCore
             }
         }
 
+        private void Awake()
+        {
+            _changePlaceActions = new Action[_sections.Length];
+
+            _startPositions = new Vector3[_sections.Length];
+        }
+
         private void Start()
         {
             var camera = Camera.main;
 
             float leftCameraBorder = camera.transform.position.x
                 - camera.aspect * camera.orthographicSize;
-
-            _changePlaceActions = new Action[_sections.Length];
-
-            _startPositions = new Vector3[_sections.Length];
 
             for (int i = 0; i < _sections.Length; i++)
             {

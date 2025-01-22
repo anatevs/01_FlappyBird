@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using GameManagement;
+using GameManagment;
+using System.Collections;
 using UI;
 using UnityEngine;
 
@@ -22,38 +24,20 @@ namespace GameCore
 
         public AchievementStorage AchievementStorage => _achievementStorage;
 
-        public Bird Bird
-        {
-            get => _bird;
-            set => _bird = value;
-        }
+        public Bird Bird { get; set; }
 
-        public MapSectionsController MapSectionsController
-        {
-            get => _mapSectionsController;
-            set => _mapSectionsController = value;
-        }
+        public MapSectionsController MapSectionsController { get; set; }
 
-        public AchievementsView AchievementsView
-        {
-            get => _achievementsView;
-            set => _achievementsView = value;
-        }
+        public AchievementsView AchievementsView { get; set; }///maybe not needed here, only in installer
 
-        public AchievementsPresenter AchievementsPresenter
-        {
-            get => _achievementsPresenter;
-            set => _achievementsPresenter = value;
-        }
+        public AchievementsPresenter AchievementsPresenter { get; set; }
+
+        public ScoreWindowPresenter ScoreWindowPresenter { get; set; }
+
+        public StartGameManager StartGameManager { get; set; }
+
+        public EndGameManager EndGameManager { get; set; }
 
         private readonly AchievementStorage _achievementStorage = new();
-
-        private Bird _bird;
-
-        private MapSectionsController _mapSectionsController;
-
-        private AchievementsView _achievementsView; ///maybe not needed here, only in installer
-
-        private AchievementsPresenter _achievementsPresenter;
     }
 }

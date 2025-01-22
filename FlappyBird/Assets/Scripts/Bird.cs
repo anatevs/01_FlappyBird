@@ -14,19 +14,38 @@ namespace GameCore
 
         private Rigidbody2D _rigidbody;
 
-        private float _startX;
+        private Vector2 _startPosition;
 
-        public void SetToInitX()
+        private bool _isPlaying;
+
+        private Vector2 _currentVelocity;
+
+        public void SetInitPosition()
         {
-            transform.position = new Vector3(
-                _startX,
-                transform.position.y,
-                transform.position.z);
+            transform.position = _startPosition;
+        }
+
+        public void SetIsPlaying(bool isPlaying)
+        {
+            _isPlaying = isPlaying;
+
+            if (isPlaying)
+            {
+                _rigidbody.isKinematic = false;
+                _rigidbody.velocity = _currentVelocity;
+            }
+            else
+            {
+                _currentVelocity = _rigidbody.velocity;
+                _rigidbody.isKinematic = true;
+            }
         }
 
         private void Start()
         {
-            _startX = transform.position.x;
+            _startPosition = transform.position;
+
+            SetIsPlaying(false);
         }
 
         private void OnEnable()
@@ -36,12 +55,17 @@ namespace GameCore
 
         private void OnClick()
         {
-            _rigidbody.velocity = Vector2.up * _speed;
+            if (_isPlaying)
+            {
+                _rigidbody.velocity = Vector2.up * _speed;
+            }
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
             Debug.Log($"collided with {collision.transform.name}");
+
+            SetIsPlaying(false);
 
             OnRoundEnded?.Invoke();
         }
