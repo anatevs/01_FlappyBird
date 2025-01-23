@@ -12,23 +12,26 @@ namespace GameCore
         [SerializeField]
         private float _speed = 5f;
 
+        [SerializeField]
+        private float[] _yBorders = {-5, 5};
+
         private Rigidbody2D _rigidbody;
 
         private Vector2 _startPosition;
 
-        private bool _isPlaying;
-
         private Vector2 _currentVelocity;
+
+        private const string GAMEPLAY_MAP = "Gameplay";
+
+        private InputActionMap _gameplayActionMap;
 
         public void SetInitPosition()
         {
             transform.position = _startPosition;
         }
 
-        public void SetIsPlaying(bool isPlaying)
+        public void SetIsMoving(bool isPlaying)
         {
-            _isPlaying = isPlaying;
-
             if (isPlaying)
             {
                 _rigidbody.isKinematic = false;
@@ -41,11 +44,28 @@ namespace GameCore
             }
         }
 
+        public void SetIsControlling(bool isControlling)
+        {
+            if (isControlling)
+            {
+                _gameplayActionMap.Enable();
+            }
+            else
+            {
+                _gameplayActionMap.Disable();
+            }
+        }
+
         private void Start()
         {
+            _gameplayActionMap = GetComponent<PlayerInput>()
+                .actions.FindActionMap(GAMEPLAY_MAP);
+
+
             _startPosition = transform.position;
 
-            SetIsPlaying(false);
+            SetIsMoving(false);
+            SetIsControlling(false);
         }
 
         private void OnEnable()
@@ -53,19 +73,32 @@ namespace GameCore
             _rigidbody = GetComponent<Rigidbody2D>();
         }
 
-        private void OnClick()
+        private void Update()
         {
-            if (_isPlaying)
+            RestrictYBorder(_yBorders[0]);
+            RestrictYBorder(_yBorders[1]);
+        }
+
+        private void RestrictYBorder(float yBorder)
+        {
+            if (Mathf.Abs(transform.position.y) >= Mathf.Abs(yBorder))
             {
-                _rigidbody.velocity = Vector2.up * _speed;
+                transform.position = new Vector2(
+                    transform.position.x,
+                    yBorder);
             }
+        }
+
+        private void OnMoveUp()
+        {
+            _rigidbody.velocity = Vector2.up * _speed;
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
             Debug.Log($"collided with {collision.transform.name}");
 
-            SetIsPlaying(false);
+            SetIsControlling(false);
 
             OnRoundEnded?.Invoke();
         }

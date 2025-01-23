@@ -24,7 +24,8 @@ namespace GameManagment
 
             _bird.SetInitPosition();
 
-            _bird.SetIsPlaying(true);
+            _bird.SetIsMoving(true);
+            _bird.SetIsControlling(true);
 
             _sectionsController.SetIsMoving(true);
         }
