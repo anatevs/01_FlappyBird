@@ -1108,6 +1108,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
+  _yBorders:
+  - -5
+  - 5
 --- !u!114 &1070741653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1290,9 +1293,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 818327b004addad43a1e5a8b60aa6029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tile: {fileID: 11400000, guid: fdbb1cccecb9fe34ca9e6adbee796849, type: 2}
+  _config: {fileID: 11400000, guid: 00d229cc57d1b2e45b2d4f60dde0f82a, type: 2}
   _map: {fileID: 367688943}
   _mapBckgr: {fileID: 1622898178}
+  _tile: {fileID: 11400000, guid: fdbb1cccecb9fe34ca9e6adbee796849, type: 2}
   _xy: 0000000000000000
   _setTile: 0
   _removeTile: 0

@@ -1,5 +1,4 @@
 ﻿using GameCore;
-using UnityEngine;
 
 namespace GameManagment
 {
@@ -18,8 +17,6 @@ namespace GameManagment
 
         public void StartGame()
         {
-            Debug.Log("start game");
-
             _sectionsController.SetSectionsToInitX();
 
             _bird.SetInitPosition();

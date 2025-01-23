@@ -1,8 +1,6 @@
 ﻿using GameManagement;
 using GameManagment;
-using System.Collections;
 using UI;
-using UnityEngine;
 
 namespace GameCore
 {
