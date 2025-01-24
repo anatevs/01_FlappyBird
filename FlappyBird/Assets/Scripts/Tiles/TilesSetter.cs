@@ -3,6 +3,7 @@ using UnityEngine.Tilemaps;
 
 namespace GameCore
 {
+    [RequireComponent(typeof(MapSection))]
     public sealed class TilesSetter : MonoBehaviour
     {
         [SerializeField]
@@ -22,24 +23,29 @@ namespace GameCore
 
         private int[] _furtherXPositions;
 
-        [Header("Check one tile")]
-        [SerializeField]
-        private Tile _tile;
+        private MapSection _mapSection;
 
-        [SerializeField]
-        private int[] _xy = new int[2];
-
-        [SerializeField]
-        private bool _setTile;
-
-        [SerializeField]
-        private bool _removeTile;
-
-        private void Start()
+        private void Awake()
         {
-            //Debug.Log(_mapBckgr.size);
-            //Debug.Log(_mapBckgr.cellBounds);
+            InitGeometry();
 
+            _mapSection = GetComponent<MapSection>();
+        }
+
+        private void OnEnable()
+        {
+            _mapSection.OnInitPosSet += SetStartObstacles;
+            _mapSection.OnBorderAchieved += ChangeTiles;
+        }
+
+        private void OnDisable()
+        {
+            _mapSection.OnInitPosSet -= SetStartObstacles;
+            _mapSection.OnBorderAchieved -= ChangeTiles;
+        }
+
+        private void InitGeometry()
+        {
             _halfSizeY = _mapBckgr.size.y / 2;
 
             _bottomRangeY[0] = _config.GroundHeight - _halfSizeY;
@@ -66,25 +72,26 @@ namespace GameCore
             }
         }
 
-        private void Update()
+        private void SetStartObstacles(int mapOrder)
         {
-            if (_setTile)
-            {
-                //SetToMap(new Vector3Int(_xy[0], _xy[1], 0), _tile);
+            ClearTiles();
 
-                //SetObstacle(_xy[0]);
-                SetFurtherMapObstacles();
-                _setTile = false;
+            if (mapOrder == 0)
+            {
+                SetZeroMapObstacles();
+                return;
             }
 
-            //if (_removeTile)
-            //{
-            //    RemoveFromMap(new Vector3Int(_xy[0], _xy[1], 0));
-            //    _removeTile = false;
-            //}
+            SetFurtherMapObstacles();
         }
 
-        private void SetStartMapObstacles()
+        private void ChangeTiles()
+        {
+            ClearTiles();
+            SetFurtherMapObstacles();
+        }
+
+        private void SetZeroMapObstacles()
         {
             SetMapObstacles(_startXPositions);
         }
@@ -92,6 +99,11 @@ namespace GameCore
         private void SetFurtherMapObstacles()
         {
             SetMapObstacles(_furtherXPositions);
+        }
+
+        private void ClearTiles()
+        {
+            _map.ClearAllTiles();
         }
 
         private void SetMapObstacles(int[] xPositions)
@@ -132,11 +144,6 @@ namespace GameCore
         private void SetToMap(int x, int y, Tile tile)
         {
             _map.SetTile(new Vector3Int(x, y, 0), tile);
-        }
-
-        private void RemoveFromMap(int x, int y)
-        {
-            _map.SetTile(new Vector3Int(x, y, 0), null);
         }
     }
 }

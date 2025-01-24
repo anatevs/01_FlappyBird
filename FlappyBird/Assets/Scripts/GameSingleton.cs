@@ -24,7 +24,7 @@ namespace GameCore
 
         public Bird Bird { get; set; }
 
-        public MapSectionsController MapSectionsController { get; set; }
+        public MovingSectionsController MapSectionsController { get; set; }
 
         public AchievementsView AchievementsView { get; set; }///maybe not needed here, only in installer
 

@@ -11,7 +11,7 @@ namespace GameManagement
         private Bird _bird;
 
         [SerializeField]
-        private MapSectionsController _sectionsController;
+        private MovingSectionsController _sectionsController;
 
         [SerializeField]
         private EndGameManager _endGameManager;

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameCore
 {
-    public sealed class MapSectionsController : MonoBehaviour //StartListener, EndListener, PauseListener, ResumeListener
+    public sealed class MovingSectionsController : MonoBehaviour
     {
         [SerializeField]
         private MapSection[] _sections;
@@ -18,10 +18,6 @@ namespace GameCore
 
         private Vector3[] _startPositions;
 
-
-        [SerializeField]
-        private bool _setToInitPos;
-
         public void SetIsMoving(bool isMoving)
         {
             _isMoving = isMoving;
@@ -34,6 +30,8 @@ namespace GameCore
             for (int i = 0; i < _sections.Length; i++)
             {
                 _sections[i].transform.position = _startPositions[i];
+
+                _sections[i].InvokeOnInitPosSet(i);
             }
         }
 
@@ -42,21 +40,6 @@ namespace GameCore
             _changePlaceActions = new Action[_sections.Length];
 
             _startPositions = new Vector3[_sections.Length];
-        }
-
-        private void Start()
-        {
-            var camera = Camera.main;
-
-            float leftCameraBorder = camera.transform.position.x
-                - camera.aspect * camera.orthographicSize;
-
-            for (int i = 0; i < _sections.Length; i++)
-            {
-                _sections[i].LeftCameraBorder = leftCameraBorder;
-
-                _startPositions[i] = _sections[i].transform.position;
-            }
         }
 
         private void OnEnable()
@@ -79,18 +62,26 @@ namespace GameCore
             }
         }
 
+        private void Start()
+        {
+            var camera = Camera.main;
+
+            float leftCameraBorder = camera.transform.position.x
+                - camera.aspect * camera.orthographicSize;
+
+            for (int i = 0; i < _sections.Length; i++)
+            {
+                _sections[i].LeftCameraBorder = leftCameraBorder;
+
+                _startPositions[i] = _sections[i].transform.position;
+            }
+        }
+
         private void Update()
         {
             if (_isMoving)
             {
                 transform.Translate(Vector3.left * _speed * Time.deltaTime);
-            }
-
-            if (_setToInitPos)
-            {
-                _setToInitPos = false;
-
-                SetSectionsToInitX();
             }
         }
 

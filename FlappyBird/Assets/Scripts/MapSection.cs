@@ -8,6 +8,8 @@ namespace GameCore
     {
         public event Action OnBorderAchieved;
 
+        public event Action<int> OnInitPosSet;
+
         public float LeftCameraBorder
         {
             get => _leftCameraBorder;
@@ -50,6 +52,11 @@ namespace GameCore
         public float GetRightBorderX()
         {
             return transform.position.x + _rightBorderShift;
+        }
+
+        public void InvokeOnInitPosSet(int mapOrder)
+        {
+            OnInitPosSet?.Invoke(mapOrder);
         }
     }
 }

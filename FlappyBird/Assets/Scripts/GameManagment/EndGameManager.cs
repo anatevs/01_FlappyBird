@@ -10,9 +10,9 @@ namespace GameManagement
 
         private Bird _bird;
 
-        private MapSectionsController _sectionsController;
+        private MovingSectionsController _sectionsController;
 
-        public void Construct(Bird bird, MapSectionsController sectionsController)
+        public void Construct(Bird bird, MovingSectionsController sectionsController)
         {
             _bird = bird;
             _sectionsController = sectionsController;

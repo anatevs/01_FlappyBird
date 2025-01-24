@@ -6,10 +6,10 @@ namespace GameManagment
     {
         private readonly Bird _bird;
 
-        private readonly MapSectionsController _sectionsController;
+        private readonly MovingSectionsController _sectionsController;
 
         public StartGameManager(Bird bird,
-            MapSectionsController sectionsController)
+            MovingSectionsController sectionsController)
         {
             _bird = bird;
             _sectionsController = sectionsController;
