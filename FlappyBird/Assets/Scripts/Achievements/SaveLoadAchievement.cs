@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace GameCore
 {
     public sealed class SaveLoadAchievement : MonoBehaviour
     {
-        private readonly AchievementStorage _achievementStorage =
-            GameSingleton.GetInstance().AchievementStorage;
+        private readonly BestScoreStorage _bestScoreStorage =
+            GameSingleton.GetInstance().BestScoreStorage;
 
         private const string SAVE_KEY = "BestResult";
 
@@ -29,12 +28,12 @@ namespace GameCore
                 bestResult = PlayerPrefs.GetInt(SAVE_KEY);
             }
 
-            _achievementStorage.SetBest(bestResult);
+            _bestScoreStorage.SetBest(bestResult);
         }
 
         private void Save()
         {
-            (var bestResult, _) = _achievementStorage.GetAchievments();
+            var bestResult = _bestScoreStorage.GetBest();
 
             PlayerPrefs.SetInt(SAVE_KEY, bestResult);
         }

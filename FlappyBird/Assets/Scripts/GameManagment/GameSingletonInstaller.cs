@@ -20,10 +20,10 @@ namespace GameManagement
         private EndGameManager _endGameManager;
 
         [SerializeField]
-        private AchievementsView _achievementsView;
+        private ScoreWindowView _scoreWindowView;
 
         [SerializeField]
-        private ScoreWindowView _scoreWindowView;
+        private CounterView _counterView;
 
         [SerializeField]
         private StartMenuView _startMenuView;
@@ -64,21 +64,23 @@ namespace GameManagement
 
         private void InstallUI(GameSingleton singleton)
         {
-            singleton.AchievementsView = _achievementsView;
-
-            var achievPresenter = new AchievementsPresenter
-                (singleton.AchievementsView,
-                singleton.AchievementStorage);
-
-            singleton.AchievementsPresenter = achievPresenter;
-
             var scorePresenter = new ScoreWindowPresenter(
-                _scoreWindowView, achievPresenter);
+                _scoreWindowView,
+                singleton.BestScoreStorage,
+                singleton.PassedObstaclesCounter);
 
             singleton.ScoreWindowPresenter = scorePresenter;
 
+            var counterPresenter = new CounterPresenter(
+                _counterView,
+                singleton.PassedObstaclesCounter);
+
+            singleton.CounterPresenter = counterPresenter;
+
             var startPresenter = new StartMenuPresenter(
-                _startMenuView, scorePresenter,
+                _startMenuView,
+                singleton.ScoreWindowPresenter,
+                singleton.CounterPresenter,
                 singleton.StartGameManager,
                 singleton.EndGameManager);
         }

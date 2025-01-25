@@ -1,15 +1,20 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 
 namespace GameCore
 {
     public sealed class PassedObstaclesCounter : MonoBehaviour
     {
-        [SerializeField]
-        private ObstaclesTilesConfig _obstaclesConfig; //period, zeroPos
+        public event Action<int> OnCountChanged;
+
+        public int Count => _counter;
 
         [SerializeField]
-        private Tilemap _backgroundMap; //cellSize
+        private ObstaclesTilesConfig _obstaclesConfig;
+
+        [SerializeField]
+        private Tilemap _backgroundMap;
 
         [SerializeField]
         private Bird _bird;
@@ -30,6 +35,7 @@ namespace GameCore
                 if (_bird.IsPassX(_targetLocalPos + _gridTransform.position.x))
                 {
                     _counter++;
+                    OnCountChanged?.Invoke(_counter);
 
                     Debug.Log($"passed {_counter}");
 
@@ -43,6 +49,7 @@ namespace GameCore
             _targetLocalPos = _obstaclesConfig.ZeroXPos + _backgroundMap.cellSize.x;
 
             _counter = 0;
+            OnCountChanged?.Invoke(_counter);
         }
 
         public void SetIsCounting(bool isCounting)

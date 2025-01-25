@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameCore;
+using System;
 
 namespace UI
 {
@@ -6,34 +7,43 @@ namespace UI
     {
         public event Action OnOkClicked;
 
-        private readonly ScoreWindowView _windowView;
+        private readonly ScoreWindowView _view;
 
-        private readonly AchievementsPresenter _achievementsPresenter;
+        private readonly BestScoreStorage _bestStorage;
+
+        private readonly PassedObstaclesCounter _obstaclesCounter;
 
         public ScoreWindowPresenter(
-            ScoreWindowView windowView,
-            AchievementsPresenter achievementsPresenter)
+            ScoreWindowView view,
+            BestScoreStorage bestStorage,
+            PassedObstaclesCounter obstaclesCounter)
         {
-            _windowView = windowView;
-            _achievementsPresenter = achievementsPresenter;
+            _view = view;
+            _bestStorage = bestStorage;
+            _obstaclesCounter = obstaclesCounter;
         }
 
         public void Show()
         {
-            _windowView.gameObject.SetActive(true);
+            _view.Show();
 
-            _achievementsPresenter.Show();
+            var best = _bestStorage.GetBest();
+            var score = _obstaclesCounter.Count;
 
-            _windowView.OnOkClicked += Hide;
+            _view.SetValues(best.ToString(), score.ToString());
+
+            _view.OnOkClicked += Hide;
         }
 
         private void Hide()
         {
             OnOkClicked?.Invoke();
 
-            _windowView.gameObject.SetActive(false);
+            _view.Hide();
 
-            _windowView.OnOkClicked -= Hide;
+            _bestStorage.UpdateBestResult(_obstaclesCounter.Count);
+
+            _view.OnOkClicked -= Hide;
         }
     }
 }

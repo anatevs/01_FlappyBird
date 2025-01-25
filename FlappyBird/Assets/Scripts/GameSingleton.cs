@@ -20,7 +20,7 @@ namespace GameCore
             return _instance;
         }
 
-        public AchievementStorage AchievementStorage => _achievementStorage;
+
 
         public Bird Bird { get; set; }
 
@@ -28,16 +28,17 @@ namespace GameCore
 
         public PassedObstaclesCounter PassedObstaclesCounter { get; set; }
 
-        public AchievementsView AchievementsView { get; set; }///maybe not needed here, only in installer
-
-        public AchievementsPresenter AchievementsPresenter { get; set; }
+        public BestScoreStorage BestScoreStorage => _bestScoreStorage;
 
         public ScoreWindowPresenter ScoreWindowPresenter { get; set; }
+
+        public CounterPresenter CounterPresenter { get; set; }
 
         public StartGameManager StartGameManager { get; set; }
 
         public EndGameManager EndGameManager { get; set; }
 
-        private readonly AchievementStorage _achievementStorage = new();
+
+        private readonly BestScoreStorage _bestScoreStorage = new();
     }
 }

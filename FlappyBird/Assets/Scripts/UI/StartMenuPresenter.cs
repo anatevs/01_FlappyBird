@@ -9,6 +9,8 @@ namespace UI
 
         private readonly ScoreWindowPresenter _scoreWindowPresenter;
 
+        private readonly CounterPresenter _counterPresenter;
+
         private readonly StartGameManager _startManager; //or it will be gameListenersManager with StartGame method
 
         private readonly EndGameManager _endManager;
@@ -16,11 +18,13 @@ namespace UI
         public StartMenuPresenter(
             StartMenuView view,
             ScoreWindowPresenter scoreWindowPresenter,
+            CounterPresenter counterPresenter,
             StartGameManager startManager,
             EndGameManager endManager)
         {
             _view = view;
             _scoreWindowPresenter = scoreWindowPresenter;
+            _counterPresenter = counterPresenter;
             _startManager = startManager;
             _endManager = endManager;
 
@@ -37,7 +41,11 @@ namespace UI
 
             _scoreWindowPresenter.OnOkClicked -= Show;
 
-            _endManager.OnRoundEnded -= Show;
+            _endManager.OnRoundEnded -= _scoreWindowPresenter.Show;
+
+            _counterPresenter.Hide();
+
+            //_endManager.OnRoundEnded -= Show;
         }
 
         private void Hide()
@@ -50,7 +58,11 @@ namespace UI
 
             _scoreWindowPresenter.OnOkClicked += Show;
 
-            _endManager.OnRoundEnded += Show;
+            _endManager.OnRoundEnded += _scoreWindowPresenter.Show;
+
+            _counterPresenter.Show();
+
+            //_endManager.OnRoundEnded += Show;
         }
 
         private void StartGame()
