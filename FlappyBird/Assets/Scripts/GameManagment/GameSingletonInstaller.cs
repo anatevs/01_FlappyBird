@@ -14,6 +14,9 @@ namespace GameManagement
         private MovingSectionsController _sectionsController;
 
         [SerializeField]
+        private PassedObstaclesCounter _obstaclesCounter;
+
+        [SerializeField]
         private EndGameManager _endGameManager;
 
         [SerializeField]
@@ -42,11 +45,15 @@ namespace GameManagement
 
             singleton.MapSectionsController
                 = _sectionsController;
+
+            singleton.PassedObstaclesCounter
+                = _obstaclesCounter;
         }
 
         private void InstallManagement(GameSingleton singleton)
         {
-            var startManager = new StartGameManager(_bird, _sectionsController);
+            var startManager = new StartGameManager(
+                _bird, _sectionsController, _obstaclesCounter);
 
             singleton.StartGameManager = startManager;
 

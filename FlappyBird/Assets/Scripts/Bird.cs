@@ -15,6 +15,9 @@ namespace GameCore
         [SerializeField]
         private float[] _yBorders = {-5, 5};
 
+        [SerializeField]
+        private Transform _backPoint;
+
         private Rigidbody2D _rigidbody;
 
         private Vector2 _startPosition;
@@ -54,6 +57,11 @@ namespace GameCore
             {
                 _gameplayActionMap.Disable();
             }
+        }
+
+        public bool IsPassX(float x)
+        {
+            return (_backPoint.position.x > x);
         }
 
         private void Start()

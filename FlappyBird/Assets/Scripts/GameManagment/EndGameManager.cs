@@ -8,6 +8,9 @@ namespace GameManagement
     {
         public event Action OnRoundEnded;
 
+        [SerializeField]
+        private PassedObstaclesCounter _obstaclesCounter;
+
         private Bird _bird;
 
         private MovingSectionsController _sectionsController;
@@ -33,6 +36,8 @@ namespace GameManagement
             OnRoundEnded?.Invoke();
 
             _sectionsController.SetIsMoving(false);
+
+            _obstaclesCounter.SetIsCounting(false);
         }
     }
 }

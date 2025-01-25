@@ -8,11 +8,15 @@ namespace GameManagment
 
         private readonly MovingSectionsController _sectionsController;
 
+        private readonly PassedObstaclesCounter _obstaclesCounter;
+
         public StartGameManager(Bird bird,
-            MovingSectionsController sectionsController)
+            MovingSectionsController sectionsController,
+            PassedObstaclesCounter obstaclesCounter)
         {
             _bird = bird;
             _sectionsController = sectionsController;
+            _obstaclesCounter = obstaclesCounter;
         }
 
         public void StartGame()
@@ -25,6 +29,9 @@ namespace GameManagment
             _bird.SetIsControlling(true);
 
             _sectionsController.SetIsMoving(true);
+
+            _obstaclesCounter.Init();
+            _obstaclesCounter.SetIsCounting(true);
         }
     }
 }

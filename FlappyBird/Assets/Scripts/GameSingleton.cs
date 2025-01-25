@@ -26,6 +26,8 @@ namespace GameCore
 
         public MovingSectionsController MapSectionsController { get; set; }
 
+        public PassedObstaclesCounter PassedObstaclesCounter { get; set; }
+
         public AchievementsView AchievementsView { get; set; }///maybe not needed here, only in installer
 
         public AchievementsPresenter AchievementsPresenter { get; set; }

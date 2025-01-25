@@ -21,4 +21,4 @@ MonoBehaviour:
   ObstaclesPeriod: 4
   ZeroXPos: 0
   GroundHeight: 2
-  TopBottomGap: 2
+  TopBottomGap: 4
