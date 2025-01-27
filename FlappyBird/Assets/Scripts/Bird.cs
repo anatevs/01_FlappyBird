@@ -19,13 +19,16 @@ namespace GameCore
         private Transform _backPoint;
 
         [SerializeField]
-        private Transform _view;
+        private Transform _viewTransform;
 
         [SerializeField]
         private float _rotSpeed = 1;
 
         [SerializeField]
         private float _maxRotation;
+
+        [SerializeField]
+        private Animator _animator;
 
         private Rigidbody2D _rigidbody;
 
@@ -44,7 +47,7 @@ namespace GameCore
         public void SetInitPositionAndRotation()
         {
             transform.position = _startPosition;
-            _view.rotation = Quaternion.AngleAxis(0, Vector3.forward);
+            _viewTransform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
         }
 
         public void SetIsMoving(bool isMoving)
@@ -61,17 +64,25 @@ namespace GameCore
             }
         }
 
-        public void SetIsControlled(bool isControlled)
+        public void SetIsPlaying(bool isPlaying)
         {
-            if (isControlled)
+            if (isPlaying)
             {
                 _gameplayActionMap.Enable();
+
+                _animator.Play("Flap");
+
+                //_animator.enabled = true;
             }
             else
             {
                 _gameplayActionMap.Disable();
 
                 _isControllingStarted = false;
+
+                
+
+                //_animator.enabled = false;
             }
         }
 
@@ -96,7 +107,7 @@ namespace GameCore
             _rotCoef = _maxRotation / _speed;
 
             SetIsMoving(false);
-            SetIsControlled(false);
+            SetIsPlaying(false);
         }
 
         private void Update()
@@ -115,8 +126,8 @@ namespace GameCore
                     _rotCoef * _rigidbody.velocity.y,
                     Vector3.forward);
 
-                _view.rotation = Quaternion.Lerp(
-                    _view.rotation, toRotation,
+                _viewTransform.rotation = Quaternion.Lerp(
+                    _viewTransform.rotation, toRotation,
                     Time.deltaTime * _rotSpeed);
             }
         }
@@ -141,9 +152,11 @@ namespace GameCore
         {
             Debug.Log($"collided with {collision.transform.name}");
 
-            SetIsControlled(false);
+            SetIsPlaying(false);
 
             OnRoundEnded?.Invoke();
+
+            _animator.SetTrigger("Fall");
         }
     }
 }

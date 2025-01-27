@@ -190,7 +190,7 @@ GameObject:
   - component: {fileID: 204125716}
   - component: {fileID: 204125715}
   m_Layer: 0
-  m_Name: bird_yellow_flap_0
+  m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1150,6 +1150,7 @@ MonoBehaviour:
   _view: {fileID: 204125714}
   _rotSpeed: 1
   _maxRotation: 90
+  _animator: {fileID: 204125715}
 --- !u!114 &1070741653
 MonoBehaviour:
   m_ObjectHideFlags: 0
