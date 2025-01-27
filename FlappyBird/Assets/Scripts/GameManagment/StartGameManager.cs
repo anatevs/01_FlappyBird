@@ -23,10 +23,10 @@ namespace GameManagment
         {
             _sectionsController.SetSectionsToInitX();
 
-            _bird.SetInitPosition();
+            _bird.SetInitPositionAndRotation();
 
             _bird.SetIsMoving(true);
-            _bird.SetIsControlling(true);
+            _bird.SetIsControlled(true);
 
             _sectionsController.SetIsMoving(true);
 

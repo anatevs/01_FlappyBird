@@ -1040,6 +1040,9 @@ MonoBehaviour:
   - -5
   - 5
   _backPoint: {fileID: 1414046751}
+  _view: {fileID: 653601453}
+  _rotSpeed: 1
+  _maxRotation: 90
 --- !u!114 &1070741653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1096,7 +1099,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 5
 --- !u!61 &1070741655
 BoxCollider2D:
   m_ObjectHideFlags: 0

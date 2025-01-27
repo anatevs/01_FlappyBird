@@ -18,24 +18,38 @@ namespace GameCore
         [SerializeField]
         private Transform _backPoint;
 
+        [SerializeField]
+        private Transform _view;
+
+        [SerializeField]
+        private float _rotSpeed = 1;
+
+        [SerializeField]
+        private float _maxRotation;
+
         private Rigidbody2D _rigidbody;
 
         private Vector2 _startPosition;
 
         private Vector2 _currentVelocity;
 
-        private const string GAMEPLAY_MAP = "Gameplay";
+        private float _rotCoef;
+
+        private bool _isControllingStarted;
+
+        private const string GAMEPLAY_INPUT_MAP = "Gameplay";
 
         private InputActionMap _gameplayActionMap;
 
-        public void SetInitPosition()
+        public void SetInitPositionAndRotation()
         {
             transform.position = _startPosition;
+            _view.rotation = Quaternion.AngleAxis(0, Vector3.forward);
         }
 
-        public void SetIsMoving(bool isPlaying)
+        public void SetIsMoving(bool isMoving)
         {
-            if (isPlaying)
+            if (isMoving)
             {
                 _rigidbody.isKinematic = false;
                 _rigidbody.velocity = _currentVelocity;
@@ -47,15 +61,17 @@ namespace GameCore
             }
         }
 
-        public void SetIsControlling(bool isControlling)
+        public void SetIsControlled(bool isControlled)
         {
-            if (isControlling)
+            if (isControlled)
             {
                 _gameplayActionMap.Enable();
             }
             else
             {
                 _gameplayActionMap.Disable();
+
+                _isControllingStarted = false;
             }
         }
 
@@ -64,27 +80,45 @@ namespace GameCore
             return (_backPoint.position.x > x);
         }
 
-        private void Start()
-        {
-            _gameplayActionMap = GetComponent<PlayerInput>()
-                .actions.FindActionMap(GAMEPLAY_MAP);
-
-
-            _startPosition = transform.position;
-
-            SetIsMoving(false);
-            SetIsControlling(false);
-        }
-
         private void OnEnable()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
         }
 
+        private void Start()
+        {
+            _gameplayActionMap = GetComponent<PlayerInput>()
+                .actions.FindActionMap(GAMEPLAY_INPUT_MAP);
+
+
+            _startPosition = transform.position;
+
+            _rotCoef = _maxRotation / _speed;
+
+            SetIsMoving(false);
+            SetIsControlled(false);
+        }
+
         private void Update()
         {
+            RotateView();
+
             RestrictYBorder(_yBorders[0]);
             RestrictYBorder(_yBorders[1]);
+        }
+
+        private void RotateView()
+        {
+            if (_isControllingStarted)
+            {
+                var toRotation = Quaternion.AngleAxis(
+                    _rotCoef * _rigidbody.velocity.y,
+                    Vector3.forward);
+
+                _view.rotation = Quaternion.Lerp(
+                    _view.rotation, toRotation,
+                    Time.deltaTime * _rotSpeed);
+            }
         }
 
         private void RestrictYBorder(float yBorder)
@@ -100,13 +134,14 @@ namespace GameCore
         private void OnMoveUp()
         {
             _rigidbody.velocity = Vector2.up * _speed;
+            _isControllingStarted = true;
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
             Debug.Log($"collided with {collision.transform.name}");
 
-            SetIsControlling(false);
+            SetIsControlled(false);
 
             OnRoundEnded?.Invoke();
         }
