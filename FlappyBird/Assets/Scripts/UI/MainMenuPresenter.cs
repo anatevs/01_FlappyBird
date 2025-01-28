@@ -3,9 +3,9 @@ using GameManagment;
 
 namespace UI
 {
-    public sealed class StartMenuPresenter
+    public sealed class MainMenuPresenter
     {
-        private readonly StartMenuView _view;
+        private readonly MainMenuView _view;
 
         private readonly ScoreWindowPresenter _scoreWindowPresenter;
 
@@ -15,18 +15,22 @@ namespace UI
 
         private readonly EndGameManager _endManager;
 
-        public StartMenuPresenter(
-            StartMenuView view,
+        private readonly ApplicationShutdown _applicationShutdown;
+
+        public MainMenuPresenter(
+            MainMenuView view,
             ScoreWindowPresenter scoreWindowPresenter,
             CounterPresenter counterPresenter,
             StartGameManager startManager,
-            EndGameManager endManager)
+            EndGameManager endManager,
+            ApplicationShutdown applicationShutdown)
         {
             _view = view;
             _scoreWindowPresenter = scoreWindowPresenter;
             _counterPresenter = counterPresenter;
             _startManager = startManager;
             _endManager = endManager;
+            _applicationShutdown = applicationShutdown;
 
             Show();
         }
@@ -39,30 +43,28 @@ namespace UI
 
             _view.OnScoreClicked += ShowScore;
 
+            _view.OnExitClicked += ExitApp;
+
+
+
             _scoreWindowPresenter.OnOkClicked -= Show;
 
             _endManager.OnRoundEnded -= _scoreWindowPresenter.Show;
 
             _counterPresenter.Hide();
-
-            //_endManager.OnRoundEnded -= Show;
         }
 
         private void Hide()
         {
             _view.Hide();
 
-            _view.OnStartClicked -= StartGame;
-
-            _view.OnScoreClicked -= ShowScore;
+            UnsubscribeView();
 
             _scoreWindowPresenter.OnOkClicked += Show;
 
             _endManager.OnRoundEnded += _scoreWindowPresenter.Show;
 
             _counterPresenter.Show();
-
-            //_endManager.OnRoundEnded += Show;
         }
 
         private void StartGame()
@@ -77,6 +79,22 @@ namespace UI
             Hide();
 
             _scoreWindowPresenter.Show();
+        }
+
+        private void ExitApp()
+        {
+            UnsubscribeView();
+
+            _applicationShutdown.QuitApp();
+        }
+
+        private void UnsubscribeView()
+        {
+            _view.OnStartClicked -= StartGame;
+
+            _view.OnScoreClicked -= ShowScore;
+
+            _view.OnExitClicked -= ExitApp;
         }
     }
 }

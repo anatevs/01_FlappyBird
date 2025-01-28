@@ -26,7 +26,7 @@ namespace GameManagement
         private CounterView _counterView;
 
         [SerializeField]
-        private StartMenuView _startMenuView;
+        private MainMenuView _mainMenuView;
 
         private void Awake()
         {
@@ -77,12 +77,13 @@ namespace GameManagement
 
             singleton.CounterPresenter = counterPresenter;
 
-            var startPresenter = new StartMenuPresenter(
-                _startMenuView,
+            var mainMenuPresenter = new MainMenuPresenter(
+                _mainMenuView,
                 singleton.ScoreWindowPresenter,
                 singleton.CounterPresenter,
                 singleton.StartGameManager,
-                singleton.EndGameManager);
+                singleton.EndGameManager,
+                new ApplicationShutdown());
         }
     }
 }

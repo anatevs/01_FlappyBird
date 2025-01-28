@@ -28,7 +28,10 @@ namespace GameCore
         private float _maxRotation;
 
         [SerializeField]
-        private Animator _animator;
+        private BirdAnimation _birdAnimation;
+
+        [SerializeField]
+        private CollisionConfig _collisionConfig;
 
         private Rigidbody2D _rigidbody;
 
@@ -70,19 +73,15 @@ namespace GameCore
             {
                 _gameplayActionMap.Enable();
 
-                _animator.Play("Flap");
+                _birdAnimation.SetActive(isPlaying);
 
-                //_animator.enabled = true;
+                _birdAnimation.SetFlapping();
             }
             else
             {
                 _gameplayActionMap.Disable();
 
                 _isControllingStarted = false;
-
-                
-
-                //_animator.enabled = false;
             }
         }
 
@@ -150,13 +149,21 @@ namespace GameCore
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            Debug.Log($"collided with {collision.transform.name}");
+            if (collision.transform.name != _collisionConfig.TerrainName &&
+                collision.transform.name != _collisionConfig.BackgroundName)
+            {
+                Debug.LogWarning("Name of terrain or background" +
+                    " tilemap in config doesn't match collided object name");
+            }
+
+            if (collision.transform.name == _collisionConfig.TerrainName)
+            {
+                _birdAnimation.SetFall();
+            }
 
             SetIsPlaying(false);
 
             OnRoundEnded?.Invoke();
-
-            _animator.SetTrigger("Fall");
         }
     }
 }

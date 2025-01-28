@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 5503496400736833603}
   - component: {fileID: 4793496409028958141}
   m_Layer: 0
-  m_Name: GameTilemap
+  m_Name: TerrainTilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
