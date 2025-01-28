@@ -1,8 +1,6 @@
-using System;
-
 namespace GameCore
 {
-    public class BestScoreStorage
+    public sealed class BestScoreStorage
     {
         private int _bestResult;
 

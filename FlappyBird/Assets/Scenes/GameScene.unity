@@ -273,7 +273,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 1453155484, guid: 5170d02019cd0d14cbe2cca88390864b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1329,7 +1329,7 @@ MonoBehaviour:
   _endGameManager: {fileID: 1278948729}
   _scoreWindowView: {fileID: 187306636}
   _counterView: {fileID: 1925542719}
-  _startMenuView: {fileID: 1666262152}
+  _mainMenuView: {fileID: 1666262152}
 --- !u!4 &1261966516
 Transform:
   m_ObjectHideFlags: 0
@@ -1355,6 +1355,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc667ec5776660643a5eebdf5c171fd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1272484296 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2691313742174011630, guid: 0b62932d0fb29bc4ab0de5891143e83f, type: 3}
+  m_PrefabInstance: {fileID: 849509550}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1278948726
@@ -1774,11 +1785,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1666262150}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9b91e9ee60f6ae4a90d2aee671e5194, type: 3}
+  m_Script: {fileID: 11500000, guid: 5cfc994914a2f9244b67306b990c905e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _startButton: {fileID: 4035774732975506258}
   _scoreButton: {fileID: 1624338469}
+  _exitButton: {fileID: 1272484296}
 --- !u!1 &1884696819
 GameObject:
   m_ObjectHideFlags: 0

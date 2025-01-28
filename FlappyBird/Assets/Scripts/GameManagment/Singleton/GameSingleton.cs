@@ -21,7 +21,6 @@ namespace GameCore
         }
 
 
-
         public Bird Bird { get; set; }
 
         public MovingSectionsController MapSectionsController { get; set; }

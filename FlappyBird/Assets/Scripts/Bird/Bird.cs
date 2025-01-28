@@ -43,6 +43,8 @@ namespace GameCore
 
         private bool _isControllingStarted;
 
+        private Collider2D _lastTerrainCollider;
+
         private const string GAMEPLAY_INPUT_MAP = "Gameplay";
 
         private InputActionMap _gameplayActionMap;
@@ -73,9 +75,14 @@ namespace GameCore
             {
                 _gameplayActionMap.Enable();
 
-                _birdAnimation.SetActive(isPlaying);
+                _birdAnimation.SetActive(true);
 
                 _birdAnimation.SetFlapping();
+
+                if (_lastTerrainCollider != null)
+                {
+                    _lastTerrainCollider.enabled = true;
+                }
             }
             else
             {
@@ -159,6 +166,14 @@ namespace GameCore
             if (collision.transform.name == _collisionConfig.TerrainName)
             {
                 _birdAnimation.SetFall();
+
+                _lastTerrainCollider = collision.collider;
+
+                _lastTerrainCollider.enabled = false;
+            }
+            else if (collision.transform.name == _collisionConfig.BackgroundName)
+            {
+                _birdAnimation.SetActive(false);
             }
 
             SetIsPlaying(false);

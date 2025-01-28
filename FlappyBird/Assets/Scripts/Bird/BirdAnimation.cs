@@ -9,16 +9,17 @@ namespace GameCore
 
         private const string FLAP_STATE = "Flap";
 
-        private const string FALL_TRIGGER = "Fall";
+        private const string FALL_BOOL = "IsFall";
 
         public void SetFlapping()
         {
+            _animator.SetBool(FALL_BOOL, false);
             _animator.Play(FLAP_STATE);
         }
 
         public void SetFall()
         {
-            _animator.SetTrigger(FALL_TRIGGER);
+            _animator.SetBool(FALL_BOOL, true);
         }
 
         public void SetActive(bool isActive)
