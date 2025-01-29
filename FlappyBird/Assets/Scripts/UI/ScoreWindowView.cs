@@ -18,9 +18,13 @@ namespace UI
         [SerializeField]
         private TMP_Text _scoreText;
 
+        [SerializeField]
+        private Image _background;
+
         public void Show()
         {
             gameObject.SetActive(true);
+            _background.enabled = true;
         }
 
         public void Hide()

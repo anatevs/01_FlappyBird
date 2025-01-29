@@ -21,6 +21,9 @@ namespace UI
         [SerializeField]
         private Button _exitButton;
 
+        [SerializeField]
+        private Image _background;
+
         private void OnEnable()
         {
             _startButton.onClick.AddListener(ClickStart);
@@ -40,6 +43,8 @@ namespace UI
             _startButton.onClick.AddListener(ClickStart);
             _scoreButton.onClick.AddListener(ClickScore);
             _exitButton.onClick.AddListener(ClickExit);
+
+            _background.enabled = true;
         }
 
         public void Hide()
@@ -49,6 +54,8 @@ namespace UI
             _startButton.onClick.RemoveAllListeners();
             _scoreButton.onClick.RemoveAllListeners();
             _exitButton.onClick.RemoveAllListeners();
+
+            _background.enabled = false;
         }
 
         private void ClickStart()

@@ -10,6 +10,8 @@ namespace GameCore
 
         public event Action<int> OnInitPosSet;
 
+        public float LeftBorderShift => _leftBorderShift;
+
         public float LeftCameraBorder
         {
             get => _leftCameraBorder;
@@ -25,7 +27,7 @@ namespace GameCore
 
         private float _leftCameraBorder;
 
-        private void Start()
+        private void Awake()
         {
             _rightBorderShift = (_backgroundTilemap.size.x
                 + _backgroundTilemap.origin.x) * _backgroundTilemap.cellSize.x;

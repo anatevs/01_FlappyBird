@@ -1,5 +1,6 @@
 ﻿using GameCore;
 using GameManagment;
+using System.Collections.Generic;
 using UI;
 using UnityEngine;
 
@@ -12,6 +13,9 @@ namespace GameManagement
 
         [SerializeField]
         private MovingSectionsController _sectionsController;
+
+        [SerializeField]
+        private LeftScreenPosition _leftScreenPosition;
 
         [SerializeField]
         private PassedObstaclesCounter _obstaclesCounter;
@@ -52,8 +56,16 @@ namespace GameManagement
 
         private void InstallManagement(GameSingleton singleton)
         {
+            var leftScreenAlignments = new List<ILeftScreenAlignment>()
+            {
+                _bird,
+                _sectionsController
+            };
+
+            _leftScreenPosition.Construct(leftScreenAlignments);
+
             var startManager = new StartGameManager(
-                _bird, _sectionsController, _obstaclesCounter);
+                _bird, _sectionsController, _obstaclesCounter, _leftScreenPosition);
 
             singleton.StartGameManager = startManager;
 

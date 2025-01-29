@@ -10,20 +10,26 @@ namespace GameManagment
 
         private readonly PassedObstaclesCounter _obstaclesCounter;
 
+        private readonly LeftScreenPosition _leftScreenPosition;
+
         public StartGameManager(Bird bird,
             MovingSectionsController sectionsController,
-            PassedObstaclesCounter obstaclesCounter)
+            PassedObstaclesCounter obstaclesCounter,
+            LeftScreenPosition leftScreenPosition)
         {
             _bird = bird;
             _sectionsController = sectionsController;
             _obstaclesCounter = obstaclesCounter;
+            _leftScreenPosition = leftScreenPosition;
         }
 
         public void StartGame()
         {
-            _sectionsController.SetSectionsToInitX();
+            _leftScreenPosition.InitPositions();
 
-            _bird.SetInitPositionAndRotation();
+            _bird.SetInitRotation();
+
+            _sectionsController.SetSectionsToInitX();
 
             _bird.SetIsMoving(true);
             _bird.SetIsPlaying(true);

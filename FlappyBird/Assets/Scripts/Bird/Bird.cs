@@ -5,12 +5,22 @@ using UnityEngine.InputSystem;
 namespace GameCore
 {
     [RequireComponent(typeof(PlayerInput), typeof(Rigidbody2D))]
-    public sealed class Bird : MonoBehaviour
+    public sealed class Bird : MonoBehaviour,
+        ILeftScreenAlignment
     {
         public event Action OnRoundEnded;
 
+        public Vector2 InitPos
+        {
+            get => _initPos;
+            set => _initPos = value;
+        }
+
         [SerializeField]
         private float _speed = 5f;
+
+        [SerializeField]
+        private float _relativeCameraPos = 0.25f;
 
         [SerializeField]
         private float[] _yBorders = {-5, 5};
@@ -35,7 +45,9 @@ namespace GameCore
 
         private Rigidbody2D _rigidbody;
 
-        private Vector2 _startPosition;
+        private float _iniPosY;
+
+        private Vector2 _initPos;
 
         private Vector2 _currentVelocity;
 
@@ -49,10 +61,27 @@ namespace GameCore
 
         private InputActionMap _gameplayActionMap;
 
-        public void SetInitPositionAndRotation()
+        public void SetInitRotation()
         {
-            transform.position = _startPosition;
             _viewTransform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
+        }
+
+        public void SetPreviousInitPosX()
+        {
+            transform.position = _initPos;
+        }
+
+        public void AlignXToScreen(float leftCameraBorder)
+        {
+            var camera = Camera.main;
+
+            var cameraHalfWidth = camera.aspect * camera.orthographicSize;
+
+            var xPos = leftCameraBorder + _relativeCameraPos * 2 * cameraHalfWidth;
+
+            transform.position = new Vector2(xPos, _iniPosY);
+
+            _initPos = transform.position;
         }
 
         public void SetIsMoving(bool isMoving)
@@ -97,6 +126,11 @@ namespace GameCore
             return (_backPoint.position.x > x);
         }
 
+        private void Awake()
+        {
+            _iniPosY = transform.position.y;
+        }
+
         private void OnEnable()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
@@ -106,9 +140,6 @@ namespace GameCore
         {
             _gameplayActionMap = GetComponent<PlayerInput>()
                 .actions.FindActionMap(GAMEPLAY_INPUT_MAP);
-
-
-            _startPosition = transform.position;
 
             _rotCoef = _maxRotation / _speed;
 

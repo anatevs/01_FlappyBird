@@ -3,8 +3,15 @@ using UnityEngine;
 
 namespace GameCore
 {
-    public sealed class MovingSectionsController : MonoBehaviour
+    public sealed class MovingSectionsController : MonoBehaviour,
+        ILeftScreenAlignment
     {
+        public Vector2 InitPos
+        {
+            get => _initPos;
+            set => _initPos = value;
+        }
+
         [SerializeField]
         private MapSection[] _sections;
 
@@ -14,9 +21,36 @@ namespace GameCore
         [SerializeField]
         bool _isMoving;
 
+        private float _unshiftedPosX;
+
+        private Vector2 _initPos;
+
         private Action[] _changePlaceActions;
 
         private Vector3[] _startPositions;
+
+        public void SetPreviousInitPosX()
+        {
+            transform.position = _initPos;
+        }
+
+        public void AlignXToScreen(float leftCameraBorder)
+        {
+            var initShiftX = _sections[0].LeftBorderShift + leftCameraBorder;
+
+            _initPos = new Vector2(
+                _unshiftedPosX + initShiftX,
+                transform.position.y);
+
+            transform.position = _initPos;
+
+            for (int i = 0; i < _sections.Length; i++)
+            {
+                _sections[i].LeftCameraBorder = leftCameraBorder;
+
+                _startPositions[i] = _sections[i].transform.position;
+            }
+        }
 
         public void SetIsMoving(bool isMoving)
         {
@@ -25,8 +59,6 @@ namespace GameCore
 
         public void SetSectionsToInitX()
         {
-            transform.position = Vector3.zero;
-
             for (int i = 0; i < _sections.Length; i++)
             {
                 _sections[i].transform.position = _startPositions[i];
@@ -40,6 +72,8 @@ namespace GameCore
             _changePlaceActions = new Action[_sections.Length];
 
             _startPositions = new Vector3[_sections.Length];
+
+            _unshiftedPosX = transform.position.x;
         }
 
         private void OnEnable()
@@ -53,27 +87,11 @@ namespace GameCore
                 _sections[i].OnBorderAchieved += _changePlaceActions[i];
             }
         }
-
         private void OnDisable()
         {
             for (int i = 0; i < _sections.Length; i++)
             {
                 _sections[i].OnBorderAchieved -= _changePlaceActions[i];
-            }
-        }
-
-        private void Start()
-        {
-            var camera = Camera.main;
-
-            float leftCameraBorder = camera.transform.position.x
-                - camera.aspect * camera.orthographicSize;
-
-            for (int i = 0; i < _sections.Length; i++)
-            {
-                _sections[i].LeftCameraBorder = leftCameraBorder;
-
-                _startPositions[i] = _sections[i].transform.position;
             }
         }
 
