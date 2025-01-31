@@ -43,6 +43,9 @@ namespace GameCore
         [SerializeField]
         private CollisionConfig _collisionConfig;
 
+        [SerializeField]
+        AudioClipsConfig _audioConfig;
+
         private Rigidbody2D _rigidbody;
 
         private float _iniPosY;
@@ -196,6 +199,8 @@ namespace GameCore
 
             if (collision.transform.name == _collisionConfig.TerrainName)
             {
+                PlaySound(BirdSoundType.Hit);
+
                 _birdAnimation.SetFall();
 
                 _lastTerrainCollider = collision.collider;
@@ -210,6 +215,13 @@ namespace GameCore
             SetIsPlaying(false);
 
             OnRoundEnded?.Invoke();
+        }
+
+        private void PlaySound(BirdSoundType soundType)
+        {
+            var sound = _audioConfig.GetAudioClip(soundType);
+
+            AudioManager.Instance.PlaySound(sound, 1f);
         }
     }
 }
