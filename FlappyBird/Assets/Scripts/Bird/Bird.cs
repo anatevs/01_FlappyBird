@@ -220,8 +220,8 @@ namespace GameCore
         private void PlaySound(BirdSoundType soundType)
         {
             var sound = _audioConfig.GetAudioClip(soundType);
-
-            AudioManager.Instance.PlaySound(sound, 1f);
+            StartCoroutine(AudioManager
+                .Instance.PlaySound(sound, 1f));
         }
     }
 }
