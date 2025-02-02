@@ -39,8 +39,6 @@ namespace GameCore
 
                     AudioManager.Instance.PlaySound(BirdSoundType.Point, 1f);
 
-                    Debug.Log($"passed {_counter}");
-
                     SetNextTargetPos();
                 }
             }

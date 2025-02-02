@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameCore
 {
-    public class AudioClipsPool
+    public sealed class AudioClipsPool
     {
         private readonly AudioSource _sourcePrefab;
 

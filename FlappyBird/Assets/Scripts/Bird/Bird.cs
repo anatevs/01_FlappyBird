@@ -187,7 +187,7 @@ namespace GameCore
             _rigidbody.velocity = Vector2.up * _speed;
             _isControllingStarted = true;
 
-            PlaySound(BirdSoundType.Flap);
+            AudioManager.Instance.PlaySound(BirdSoundType.Flap, 0.5f);
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -222,7 +222,7 @@ namespace GameCore
 
         private void PlaySound(BirdSoundType soundType)
         {
-            AudioManager.Instance.PlaySound(soundType, 1f, _audioConfig);
+            AudioManager.Instance.PlaySound(soundType, 1f);
 
 
             //var sound = _audioConfig.GetAudioClip(soundType);
