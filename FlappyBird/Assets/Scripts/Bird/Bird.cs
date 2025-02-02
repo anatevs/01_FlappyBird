@@ -186,6 +186,8 @@ namespace GameCore
         {
             _rigidbody.velocity = Vector2.up * _speed;
             _isControllingStarted = true;
+
+            PlaySound(BirdSoundType.Flap);
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -210,6 +212,7 @@ namespace GameCore
             else if (collision.transform.name == _collisionConfig.BackgroundName)
             {
                 _birdAnimation.SetActive(false);
+                PlaySound(BirdSoundType.Die);
             }
 
             SetIsPlaying(false);
@@ -219,9 +222,12 @@ namespace GameCore
 
         private void PlaySound(BirdSoundType soundType)
         {
-            var sound = _audioConfig.GetAudioClip(soundType);
-            StartCoroutine(AudioManager
-                .Instance.PlaySound(sound, 1f));
+            AudioManager.Instance.PlaySound(soundType, 1f, _audioConfig);
+
+
+            //var sound = _audioConfig.GetAudioClip(soundType);
+            //StartCoroutine(AudioManager
+            //    .Instance.PlaySound(sound, 1f));
         }
     }
 }

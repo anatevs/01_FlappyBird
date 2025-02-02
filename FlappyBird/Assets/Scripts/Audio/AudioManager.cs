@@ -1,7 +1,5 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Pool;
 
 namespace GameCore
 {
@@ -13,15 +11,16 @@ namespace GameCore
         [SerializeField]
         private Transform _poolTransform;
 
-        private static AudioManager _instance;
+        [SerializeField]
+        AudioClipsConfig _audioConfig;
 
-        //private IObjectPool<AudioSource> _sourcePool1;
+        private static AudioManager _instance;
 
         private AudioClipsPool _sourcesPool;
 
-        private int _poolInitSize = 4;
+        private readonly int _poolInitSize = 4;
 
-        //private string _pushMethodName;
+        private float _volume = 1f;
 
         public static AudioManager Instance => _instance;
 
@@ -33,26 +32,26 @@ namespace GameCore
             }
 
             _sourcesPool = new AudioClipsPool(_audioSourcePrefab, _poolTransform, _poolInitSize);
-
-            //_pushMethodName = nameof(AudioClipsPool.Push);
         }
 
-        //public void PlaySound(AudioClip clip, float volume)
-        //{
-        //    //AudioSource source = _sourcePool1.Get();
+        public void PlaySound(BirdSoundType soundType,
+            float volume)
+        {
+            var sound = _audioConfig.GetAudioClip(soundType);
 
-        //    var source = _sourcesPool.Pool();
+            StartCoroutine(Instance.PlaySound(sound, volume));
+        }
 
-        //    source.clip = clip;
+        public void PlaySound(BirdSoundType soundType,
+            float volume,
+            AudioClipsConfig audioConfig)
+        {
+            var sound = audioConfig.GetAudioClip(soundType);
 
-        //    source.volume = volume;
+            StartCoroutine(Instance.PlaySound(sound, volume));
+        }
 
-        //    source.Play();
-
-        //    Invoke(_pushMethodName, clip.length);
-        //}
-
-        public IEnumerator PlaySound(AudioClip clip, float volume)
+        private IEnumerator PlaySound(AudioClip clip, float volume)
         {
             var source = _sourcesPool.Pool();
 
@@ -66,19 +65,5 @@ namespace GameCore
 
             _sourcesPool.Push(source);
         }
-
-        //private void PushSource(AudioSource source)
-        //{
-        //    _sourcePool1.Release(source);
-        //}
-
-        //public ObjectPool<T0>(
-        //Func<T> createFunc,
-        //Action<T> actionOnGet,
-        //Action<T> actionOnRelease,
-        //Action<T> actionOnDestroy,
-        //bool collectionCheck,
-        //int defaultCapacity,
-        //int maxSize)
     }
 }
