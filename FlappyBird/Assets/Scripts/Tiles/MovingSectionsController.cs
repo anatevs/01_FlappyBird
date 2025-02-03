@@ -29,7 +29,7 @@ namespace GameCore
 
         private Vector3[] _startPositions;
 
-        public void SetPreviousInitPosX()
+        public void SetToInitPosX()
         {
             transform.position = _initPos;
         }

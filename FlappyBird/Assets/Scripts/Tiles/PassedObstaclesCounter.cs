@@ -37,7 +37,7 @@ namespace GameCore
                     _counter++;
                     OnCountChanged?.Invoke(_counter);
 
-                    AudioManager.Instance.PlaySound(BirdSoundType.Point, 1f);
+                    AudioManager.Instance.PlaySound(BirdSoundType.Point);
 
                     SetNextTargetPos();
                 }

@@ -48,8 +48,6 @@ namespace GameCore
 
         private Rigidbody2D _rigidbody;
 
-        private float _iniPosY;
-
         private Vector2 _initPos;
 
         private Vector2 _currentVelocity;
@@ -69,7 +67,7 @@ namespace GameCore
             _viewTransform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
         }
 
-        public void SetPreviousInitPosX()
+        public void SetToInitPosX()
         {
             transform.position = _initPos;
         }
@@ -82,9 +80,9 @@ namespace GameCore
 
             var xPos = leftCameraBorder + _relativeCameraPos * 2 * cameraHalfWidth;
 
-            transform.position = new Vector2(xPos, _iniPosY);
+            _initPos.x = xPos;
 
-            _initPos = transform.position;
+            SetToInitPosX();
         }
 
         public void SetIsMoving(bool isMoving)
@@ -131,7 +129,7 @@ namespace GameCore
 
         private void Awake()
         {
-            _iniPosY = transform.position.y;
+            _initPos.y = transform.position.y;
         }
 
         private void OnEnable()
@@ -187,7 +185,7 @@ namespace GameCore
             _rigidbody.velocity = Vector2.up * _speed;
             _isControllingStarted = true;
 
-            AudioManager.Instance.PlaySound(BirdSoundType.Flap, 0.5f);
+            PlaySound(BirdSoundType.Flap);
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -222,12 +220,7 @@ namespace GameCore
 
         private void PlaySound(BirdSoundType soundType)
         {
-            AudioManager.Instance.PlaySound(soundType, 1f);
-
-
-            //var sound = _audioConfig.GetAudioClip(soundType);
-            //StartCoroutine(AudioManager
-            //    .Instance.PlaySound(sound, 1f));
+            AudioManager.Instance.PlaySound(soundType);
         }
     }
 }

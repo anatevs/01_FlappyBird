@@ -11,17 +11,17 @@ namespace GameCore
         [SerializeField]
         private BirdSoundsStruct[] _clipsArray;
 
-        private readonly Dictionary<BirdSoundType, AudioClip> _clips = new();
+        private readonly Dictionary<BirdSoundType, (AudioClip clip, float volume)> _clips = new();
 
         private void OnEnable()
         {
             foreach (var clip in _clipsArray)
             {
-                _clips.Add(clip.Name, clip.AudioClip);
+                _clips.Add(clip.Name, (clip.AudioClip, clip.Volume));
             }
         }
 
-        public AudioClip GetAudioClip(BirdSoundType sound)
+        public (AudioClip clip, float volume) GetAudioClip(BirdSoundType sound)
         {
             return _clips[sound];
         }
@@ -32,6 +32,7 @@ namespace GameCore
     {
         public BirdSoundType Name;
         public AudioClip AudioClip;
+        public float Volume;
     }
 
     public enum BirdSoundType

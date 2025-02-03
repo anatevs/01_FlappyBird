@@ -6,7 +6,7 @@ namespace GameCore
     {
         public Vector2 InitPos { get; set; }
 
-        public void SetPreviousInitPosX();
+        public void SetToInitPosX();
 
         public void AlignXToScreen(float leftCameraBorder);
     }

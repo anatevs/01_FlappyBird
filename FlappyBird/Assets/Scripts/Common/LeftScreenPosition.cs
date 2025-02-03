@@ -36,13 +36,11 @@ namespace GameCore
             {
                 foreach (var alignment in _leftScreenAlignments)
                 {
-                    alignment.SetPreviousInitPosX();
+                    alignment.SetToInitPosX();
                 }
             }
             else
             {
-                Debug.Log("other screen");
-
                 _leftCameraBorder = leftCameraBorder;
 
                 foreach (var alignment in _leftScreenAlignments)

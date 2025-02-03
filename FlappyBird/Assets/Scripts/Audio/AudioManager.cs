@@ -20,8 +20,6 @@ namespace GameCore
 
         private readonly int _poolInitSize = 4;
 
-        private float _volume = 1f;
-
         public static AudioManager Instance => _instance;
 
         private void Awake()
@@ -34,24 +32,22 @@ namespace GameCore
             _sourcesPool = new AudioClipsPool(_audioSourcePrefab, _poolTransform, _poolInitSize);
         }
 
-        public void PlaySound(BirdSoundType soundType,
-            float volume)
+        public void PlaySound(BirdSoundType soundType)
         {
-            var sound = _audioConfig.GetAudioClip(soundType);
+            var (clip, volume) = _audioConfig.GetAudioClip(soundType);
 
-            StartCoroutine(Instance.PlaySound(sound, volume));
+            StartCoroutine(Instance.PlaySoundCoroutine(clip, volume));
         }
 
         public void PlaySound(BirdSoundType soundType,
-            float volume,
             AudioClipsConfig audioConfig)
         {
-            var sound = audioConfig.GetAudioClip(soundType);
+            var (clip, volume) = audioConfig.GetAudioClip(soundType);
 
-            StartCoroutine(Instance.PlaySound(sound, volume));
+            StartCoroutine(Instance.PlaySoundCoroutine(clip, volume));
         }
 
-        private IEnumerator PlaySound(AudioClip clip, float volume)
+        private IEnumerator PlaySoundCoroutine(AudioClip clip, float volume)
         {
             var source = _sourcesPool.Pool();
 
