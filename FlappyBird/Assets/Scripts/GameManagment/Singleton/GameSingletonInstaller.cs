@@ -32,6 +32,12 @@ namespace GameManagement
         [SerializeField]
         private MainMenuView _mainMenuView;
 
+        [SerializeField]
+        private LocaleChangeView _localeChangeView;
+
+        [SerializeField]
+        private LocalesData _localesData;
+
         private void Awake()
         {
             var singleton = GameSingleton.GetInstance();
@@ -81,18 +87,19 @@ namespace GameManagement
                 singleton.BestScoreStorage,
                 singleton.PassedObstaclesCounter);
 
-            singleton.ScoreWindowPresenter = scorePresenter;
+            var changeLocalesPresenter = new LocaleChangePresenter(
+                _localeChangeView,
+                _localesData);
 
             var counterPresenter = new CounterPresenter(
                 _counterView,
                 singleton.PassedObstaclesCounter);
 
-            singleton.CounterPresenter = counterPresenter;
-
             var mainMenuPresenter = new MainMenuPresenter(
                 _mainMenuView,
-                singleton.ScoreWindowPresenter,
-                singleton.CounterPresenter,
+                scorePresenter,
+                changeLocalesPresenter,
+                counterPresenter,
                 singleton.StartGameManager,
                 singleton.EndGameManager,
                 new ApplicationShutdown());

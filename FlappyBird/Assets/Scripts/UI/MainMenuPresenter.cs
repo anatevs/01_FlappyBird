@@ -9,9 +9,11 @@ namespace UI
 
         private readonly ScoreWindowPresenter _scoreWindowPresenter;
 
+        private readonly LocaleChangePresenter _localeChangePresenter;
+
         private readonly CounterPresenter _counterPresenter;
 
-        private readonly StartGameManager _startManager; //or it will be gameListenersManager with StartGame method
+        private readonly StartGameManager _startManager;
 
         private readonly EndGameManager _endManager;
 
@@ -20,13 +22,16 @@ namespace UI
         public MainMenuPresenter(
             MainMenuView view,
             ScoreWindowPresenter scoreWindowPresenter,
+            LocaleChangePresenter localeChangePresenter,
             CounterPresenter counterPresenter,
             StartGameManager startManager,
             EndGameManager endManager,
-            ApplicationShutdown applicationShutdown)
+            ApplicationShutdown applicationShutdown
+            )
         {
             _view = view;
             _scoreWindowPresenter = scoreWindowPresenter;
+            _localeChangePresenter = localeChangePresenter;
             _counterPresenter = counterPresenter;
             _startManager = startManager;
             _endManager = endManager;
@@ -45,7 +50,7 @@ namespace UI
 
             _view.OnExitClicked += ExitApp;
 
-
+            _localeChangePresenter.Show();
 
             _scoreWindowPresenter.OnOkClicked -= Show;
 
@@ -58,7 +63,7 @@ namespace UI
         {
             _view.Hide();
 
-            UnsubscribeView();
+            UnsubscribeAll();
 
             _scoreWindowPresenter.OnOkClicked += Show;
 
@@ -83,18 +88,20 @@ namespace UI
 
         private void ExitApp()
         {
-            UnsubscribeView();
+            UnsubscribeAll();
 
             _applicationShutdown.QuitApp();
         }
 
-        private void UnsubscribeView()
+        private void UnsubscribeAll()
         {
             _view.OnStartClicked -= StartGame;
 
             _view.OnScoreClicked -= ShowScore;
 
             _view.OnExitClicked -= ExitApp;
+
+            _localeChangePresenter.Hide();
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using GameManagement;
 using GameManagment;
-using UI;
 
 namespace GameCore
 {
@@ -28,10 +27,6 @@ namespace GameCore
         public PassedObstaclesCounter PassedObstaclesCounter { get; set; }
 
         public BestScoreStorage BestScoreStorage => _bestScoreStorage;
-
-        public ScoreWindowPresenter ScoreWindowPresenter { get; set; }
-
-        public CounterPresenter CounterPresenter { get; set; }
 
         public StartGameManager StartGameManager { get; set; }
 
