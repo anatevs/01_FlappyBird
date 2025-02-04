@@ -15,7 +15,7 @@ MonoBehaviour:
   _clipsArray:
   - Name: 0
     AudioClip: {fileID: 8300000, guid: cc8c8447eafd3d74e91fac6fb61cfeef, type: 3}
-    Volume: 0.5
+    Volume: 0.3
   - Name: 1
     AudioClip: {fileID: 8300000, guid: 3c4037fd422a75c4ebc79cd3b1344bd4, type: 3}
     Volume: 1
