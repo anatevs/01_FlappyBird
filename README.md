@@ -13,11 +13,11 @@ Project learning goals:
 - build and test the game for android platform
 
 Gameplay:
-https://github.com/user-attachments/assets/9e5a77d4-f7cd-4ddd-b70e-5809b45af67a
+<video src="https://github.com/user-attachments/assets/9e5a77d4-f7cd-4ddd-b70e-5809b45af67a"></video>
+
 
 Changing between languages:
-https://github.com/user-attachments/assets/8b9e0931-aba5-412a-ba9c-3f9fbd88b178
-
+<video src="https://github.com/user-attachments/assets/8b9e0931-aba5-412a-ba9c-3f9fbd88b178"></video>
 
 
 Some details of realisation:
