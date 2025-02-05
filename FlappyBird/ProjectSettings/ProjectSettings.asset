@@ -134,7 +134,9 @@ PlayerSettings:
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
   bundleVersion: 1.0
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: 11400000, guid: c8ad1d3c88bebfb419a1a8d9e0ee6119, type: 2}
+  - {fileID: 11400000, guid: a6193c6cd962e7f48a79a02572fde849, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -454,28 +456,28 @@ PlayerSettings:
       m_SubKind: 
     - m_Textures:
       - {fileID: 2800000, guid: aef0d863f5f782249868ecda77317be6, type: 3}
-      - {fileID: 2800000, guid: a6861d268fc69c64da9bc4f70a66906f, type: 3}
+      - {fileID: 2800000, guid: ee52d49d68adf7e4fb3ed78312a52f70, type: 3}
       m_Width: 216
       m_Height: 216
       m_Kind: 2
       m_SubKind: 
     - m_Textures:
       - {fileID: 2800000, guid: aef0d863f5f782249868ecda77317be6, type: 3}
-      - {fileID: 2800000, guid: a6861d268fc69c64da9bc4f70a66906f, type: 3}
+      - {fileID: 2800000, guid: a8943aa1bb3416d40a4adae3d84ced24, type: 3}
       m_Width: 162
       m_Height: 162
       m_Kind: 2
       m_SubKind: 
     - m_Textures:
       - {fileID: 2800000, guid: aef0d863f5f782249868ecda77317be6, type: 3}
-      - {fileID: 2800000, guid: a6861d268fc69c64da9bc4f70a66906f, type: 3}
+      - {fileID: 2800000, guid: 678eb872d60c91a438272f23e8945a9e, type: 3}
       m_Width: 108
       m_Height: 108
       m_Kind: 2
       m_SubKind: 
     - m_Textures:
       - {fileID: 2800000, guid: aef0d863f5f782249868ecda77317be6, type: 3}
-      - {fileID: 2800000, guid: a6861d268fc69c64da9bc4f70a66906f, type: 3}
+      - {fileID: 2800000, guid: 714a63252a1910c4b8bdd38ad60bee50, type: 3}
       m_Width: 81
       m_Height: 81
       m_Kind: 2
