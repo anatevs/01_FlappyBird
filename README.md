@@ -19,6 +19,7 @@ Changing between languages:
 https://github.com/user-attachments/assets/8b9e0931-aba5-412a-ba9c-3f9fbd88b178
 
 
+
 Some details of realisation:
 - best score is storing between play sessions
 - scene's left bound align to a left border of a camera screen at each game starting
