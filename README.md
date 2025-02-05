@@ -7,7 +7,8 @@ Project learning goals:
 - apply the new Unity Input system
 - apply a Singleton pattern for DI (to better understanding it's pros and cons)
 - use MVP-PassiveView pattern for UI elements
-- use a Localization Settings to set 2 languages in the game
+- try to use a Localization Settings to set 2 languages in the game
+- try to work with sounds
 - make completely working game
 - build and test the game for android platform
 
